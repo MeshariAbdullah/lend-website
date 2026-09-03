@@ -1,37 +1,22 @@
-# Lend Brand Identity Assets
+# Lend brand assets
 
-This folder holds the **official Lend brand identity files**. These assets are the
-visual source of truth for the website — logo, colors, typography, iconography,
-graphic language, and usage rules.
+Official Lend identity files, kept exactly as provided or extracted 1:1 from the
+official guidelines. See `docs/design-audit.md` for the full audit.
 
-## Folder structure
-
-| Folder | What goes here |
+| Path | Contents |
 |---|---|
-| `logo/` | Official logo files. SVG originals preferred; PNG/JPG variants preserved as provided. |
-| `colors/` | Color palette references (swatch files, palette exports, color spec documents). |
-| `icons/` | Official brand iconography (SVG preferred). |
-| `images/` | Brand imagery, photography, patterns, and other graphic assets. |
-| `guidelines/` | Brand guideline documents (e.g. PDFs). Reference only — not embedded in the site. |
+| `logo/lend-mark.svg` | Primary mark (navy + green). Geometry extracted from the brand guidelines PDF, page 4 |
+| `logo/lend-mark-on-dark.svg` | On-dark variant (white + green) |
+| `logo/lend-mark-mono.svg`, `logo/lend-mark-mono-white.svg` | Monochrome variants |
+| `logo/lend-logo-horizontal*.svg` | Mark + wordmark lockup. The wordmark is live text (Inter Bold, wide tracking) as specified by the guidelines |
+| `logo/reference/` | 300 dpi renders of the logo page from the official PDF, for visual comparison |
+| `colors/lend-palette.json` | Official palette (PDF p.6) plus the neutrals used by the design system |
+| `colors/lend-palette-guidelines-p6.png` | Render of the palette page from the official PDF |
+| `guidelines/lend-brand-guidelines.pdf` | Lend Brand Guidelines V1.0 (2026). Reference only, not linked from the site |
+| `icons/`, `images/` | Empty — the archive ships no icon set or imagery |
 
-## Rules
+Rules
 
-- **Do not modify originals.** Files here are kept exactly as provided.
-- **Logo:** never recreated or reinterpreted — only the official asset is used.
-- **Fonts:** font files are **not** committed here unless licensing clearly allows
-  redistribution. Font names are identified from the guidelines and loaded via a
-  properly licensed source (e.g. Google Fonts, Adobe Fonts, or self-hosting with a
-  valid web license).
-- **Colors:** official color references are converted into reusable Tailwind/CSS
-  design tokens for the site — the source references stay in `colors/`.
-- **Guidelines PDFs** stay in `guidelines/` as reference material only.
-
-## Workflow
-
-1. Place the official brand identity files in the folders above.
-2. Each asset is then audited and catalogued (what it is, which is the primary
-   logo, which are variants).
-3. The official palette and typography are extracted from the assets/guidelines.
-4. Reusable design tokens are built from the identity — nothing is invented
-   beyond what the official assets define; anything unclear is reported, not
-   guessed.
+- Never alter the mark's proportions or colours. Clear space = ½ the centre dot's diameter. Minimum 24 px digital.
+- Fonts (Inter, IBM Plex Sans Arabic) are loaded from Google Fonts via `next/font`; no font files are committed.
+- Design tokens derived from these files live in `src/app/globals.css`.

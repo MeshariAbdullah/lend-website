@@ -1,0 +1,33 @@
+{
+  "source": "Lend Brand Guidelines V1.0 (2026), page 6 · confirmed by Lend Design System (Claude Design archive)",
+  "primary": {
+    "deepNavy":     { "hex": "#1B2951", "rgb": [27, 41, 81],   "usage": "Primary, buttons, key text" },
+    "vibrantGreen": { "hex": "#12A67E", "rgb": [18, 166, 126], "usage": "Secondary, emphasis, verified states" }
+  },
+  "supporting": {
+    "warmBeige": { "hex": "#F5F5F0", "usage": "Page backgrounds" },
+    "greenTint": { "hex": "#E1F5EE", "usage": "Verified background" },
+    "navyTint":  { "hex": "#EEF2F9", "usage": "Info background" }
+  },
+  "semantic": {
+    "deepGreen": { "hex": "#0F6E56", "usage": "Done / verified" },
+    "amber":     { "hex": "#BA7517", "usage": "In progress / pending only" },
+    "alertRed":  { "hex": "#A32D2D", "usage": "Error / canceled" }
+  },
+  "designSystemDerived": {
+    "note": "Neutrals and state tints used by the Lend Design System components (not in the PDF, taken from the design system file).",
+    "textMuted":   "#5B6683",
+    "textBody":    "#3A4568",
+    "textFaint":   "#9AA1B5",
+    "onNavyMuted": "#B9C2D8",
+    "border":      "#E7E8E1",
+    "borderSoft":  "#EFEFE9",
+    "control":     "#D9DCE6",
+    "navyHover":   "#26365F",
+    "navyPressed": "#131F3D",
+    "amberTint":   "#F7EBD8",
+    "redTint":     "#F5DEDE",
+    "focusRing":   "#BFE8DB",
+    "canvas":      "#ECECE5"
+  }
+}

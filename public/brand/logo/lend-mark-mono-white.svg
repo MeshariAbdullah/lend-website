@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" width="80" height="80" role="img" aria-labelledby="t">
+  <title id="t">Lend mark — monochrome white</title>
+  <!-- Geometry extracted from Lend Brand Guidelines V1.0 (page 4). Do not alter proportions or colors. -->
+  <path d="M5 40C5 16.667 16.667 5 40 5C63.333 5 75 16.667 75 40" fill="none" stroke="#FFFFFF" stroke-width="8.75" stroke-linecap="round"/>
+  <path d="M75 40C75 63.333 63.333 75 40 75C16.667 75 5 63.333 5 40" fill="none" stroke="#FFFFFF" stroke-width="8.75" stroke-linecap="round"/>
+  <circle cx="40" cy="40" r="7" fill="#FFFFFF"/>
+</svg>

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 80" width="250" height="80" role="img" aria-labelledby="t">
+  <title id="t">Lend</title>
+  <path d="M5 40C5 16.667 16.667 5 40 5C63.333 5 75 16.667 75 40" fill="none" stroke="#1B2951" stroke-width="8.75" stroke-linecap="round"/>
+  <path d="M75 40C75 63.333 63.333 75 40 75C16.667 75 5 63.333 5 40" fill="none" stroke="#12A67E" stroke-width="8.75" stroke-linecap="round"/>
+  <circle cx="40" cy="40" r="7" fill="#1B2951"/>
+  <text x="98" y="52" font-family="Inter, 'Helvetica Neue', Arial, sans-serif" font-size="34" font-weight="700" letter-spacing="11" fill="#1B2951">LEND</text>
+</svg>

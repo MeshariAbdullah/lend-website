@@ -1,0 +1,174 @@
+@import "tailwindcss";
+
+/*
+  Lend design tokens.
+  Source of truth: Lend Brand Guidelines V1.0 (public/brand/guidelines) and the
+  Lend Design System (Claude Design archive). Nothing here is invented beyond
+  what those two sources define; see docs/design-audit.md.
+*/
+@theme {
+  /* Brand palette (guidelines p.6) */
+  --color-navy: #1b2951;
+  --color-navy-hover: #26365f;
+  --color-navy-pressed: #131f3d;
+  --color-green: #12a67e;
+  --color-green-deep: #0f6e56;
+  --color-beige: #f5f5f0;
+  --color-canvas: #ecece5;
+  --color-tint-green: #e1f5ee;
+  --color-tint-navy: #eef2f9;
+  --color-tint-amber: #f7ebd8;
+  --color-tint-red: #f5dede;
+  --color-amber: #ba7517;
+  --color-red: #a32d2d;
+
+  /* Neutrals used by the design system components */
+  --color-ink: #1b2951;
+  --color-ink-body: #3a4568;
+  --color-ink-muted: #5b6683;
+  --color-ink-faint: #9aa1b5;
+  --color-on-navy-muted: #b9c2d8;
+  --color-on-navy-green: #7fdec2;
+  --color-line: #e7e8e1;
+  --color-line-soft: #efefe9;
+  --color-control: #d9dce6;
+  --color-focus: #bfe8db;
+
+  /* Radius: controls 10 · cards 14 · panels 20 · phone screens 28 · chips pill */
+  --radius-control: 10px;
+  --radius-card: 14px;
+  --radius-panel: 20px;
+  --radius-screen: 28px;
+
+  /* One soft shadow level (cards) + the screen/modal elevations from the DS */
+  --shadow-card: 0 2px 8px rgba(27, 41, 81, 0.1);
+  --shadow-screen: 0 4px 24px rgba(27, 41, 81, 0.12);
+  --shadow-modal: 0 12px 40px rgba(27, 41, 81, 0.25);
+
+  /* Typography: Inter (Latin) · IBM Plex Sans Arabic (Arabic) */
+  --font-sans: var(--font-inter), var(--font-plex-arabic), system-ui, sans-serif;
+  --font-arabic: var(--font-plex-arabic), var(--font-inter), system-ui, sans-serif;
+
+  --container-site: 1240px;
+  --container-wide: 1320px;
+
+  --animate-none: none;
+}
+
+@layer base {
+  html {
+    background: var(--color-beige);
+    color: var(--color-ink);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  html[lang="ar"] body {
+    font-family: var(--font-arabic);
+  }
+
+  html[lang="en"] body {
+    font-family: var(--font-sans);
+  }
+
+  body {
+    background: var(--color-beige);
+    color: var(--color-ink);
+    min-height: 100dvh;
+  }
+
+  /* Arabic needs more line-height; Latin sits tighter. */
+  html[lang="ar"] {
+    --leading-heading: 1.45;
+    --leading-body: 1.85;
+  }
+  html[lang="en"] {
+    --leading-heading: 1.15;
+    --leading-body: 1.65;
+  }
+
+  ::selection {
+    background: var(--color-tint-green);
+    color: var(--color-green-deep);
+  }
+
+  :focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--color-focus);
+    border-radius: var(--radius-control);
+  }
+
+  [id] {
+    scroll-margin-top: 96px;
+  }
+}
+
+@layer components {
+  /* Numbers, IDs and phone digits stay Latin and left-to-right (DS RTL rule). */
+  .num {
+    direction: ltr;
+    unicode-bidi: isolate;
+    font-family: var(--font-sans);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .leading-heading {
+    line-height: var(--leading-heading);
+  }
+  .leading-body {
+    line-height: var(--leading-body);
+  }
+
+  /* Section eyebrow, as used in the design system ("01 — FOUNDATIONS"). */
+  .eyebrow {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-green-deep);
+  }
+  html[lang="ar"] .eyebrow {
+    font-family: var(--font-arabic);
+    letter-spacing: 0;
+    word-spacing: 0.12em;
+    font-size: 0.8125rem;
+  }
+
+  .card {
+    background: #fff;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-card);
+  }
+
+  .phone {
+    background: var(--color-beige);
+    border-radius: var(--radius-screen);
+    box-shadow: var(--shadow-screen);
+    border: 1px solid rgba(27, 41, 81, 0.06);
+    overflow: hidden;
+  }
+
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  details.faq > summary {
+    list-style: none;
+  }
+  details.faq > summary::-webkit-details-marker {
+    display: none;
+  }
+  details.faq[open] .faq-icon {
+    transform: rotate(45deg);
+  }
+}
