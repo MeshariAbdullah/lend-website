@@ -185,12 +185,12 @@ export const en: SiteContent = {
         a: "Confirmation that the item was received, its condition at that moment (good, or with notes), and the time it was recorded. The same happens at return.",
       },
       {
-        q: "What happens if there is a dispute?",
-        a: "A documented case (damage or non-return) is opened with a description, evidence and a claim amount, and followed on a structured track linked to the contract. Lend organizes the documentation and the process; it is not a court or an arbitrator and does not guarantee any legal outcome.",
+        q: "How does Lend help when the two parties disagree?",
+        a: "Lend provides a structured path for documenting disagreements connected to a rental, so the contract details, claims, each party's notes, and the documentation records all appear in one clear record.\n\nThat makes it easier to understand the situation and follow the handling steps, instead of relying on scattered conversations or unorganized evidence.",
       },
       {
-        q: "Does Lend verify identity with the government?",
-        a: "No. The mobile verification code only confirms access to your Lend account. The national ID the business records in the contract is contractual data for that rental, which the customer reviews and accepts; it is not verified by Lend or any government system.",
+        q: "How does Lend document the parties to a rental?",
+        a: "Lend links each rental to the customer's account and mobile number, and shows the customer the contract data entered by the business before approval, including the parties' details and the rental terms.\n\nThis gives both sides a clear digital record of the rental, with the contract, receipt, and notes connected in one place, reducing ambiguity and making each party's rights clearer.",
       },
       {
         q: "Can rental businesses join Lend?",

@@ -19,8 +19,12 @@ export function Faq({ c }: { c: SiteContent }) {
                     <Icon name="plus" size={16} strokeWidth={2} />
                   </span>
                 </summary>
-                <div className="px-5 pb-5 sm:px-6 sm:pb-6">
-                  <p className="text-[15px] leading-body text-ink-body">{f.a}</p>
+                <div className="flex flex-col gap-3 px-5 pb-5 sm:px-6 sm:pb-6">
+                  {f.a.split("\n\n").map((paragraph) => (
+                    <p key={paragraph} className="text-[15px] leading-body text-ink-body">
+                      {paragraph}
+                    </p>
+                  ))}
                 </div>
               </details>
             ))}
