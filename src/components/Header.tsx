@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Icon } from "./Icon";
 import { Logo } from "./Logo";
 import { buttonClass } from "./ui";
@@ -22,15 +22,34 @@ type Props = {
 
 export function Header({ homeHref, links, cta, switchHref, switchLabel, switchTo, openMenu, closeMenu, brandName }: Props) {
   const [open, setOpen] = useState(false);
+  const toggleRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
+      if (e.key === "Escape") {
+        setOpen(false);
+        toggleRef.current?.focus();
+      }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
+
+  /**
+   * Switching language keeps the reader on the same section: the current
+   * hash is appended at click time, since hashes never reach the server and
+   * cannot be known during render. A full document navigation is deliberate:
+   * the page language, direction and fonts are rebuilt from scratch, and the
+   * browser lands on the hash. The plain href stays correct for crawlers and
+   * for opening in a new tab.
+   */
+  const onSwitch = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+    e.preventDefault();
+    const destination = new URL(`${switchHref}${window.location.hash}`, window.location.origin);
+    window.location.assign(destination.href);
+  };
 
   return (
     <header className="sticky top-0 z-40 border-b border-line bg-beige/95 backdrop-blur-[2px]">
@@ -59,6 +78,7 @@ export function Header({ homeHref, links, cta, switchHref, switchLabel, switchTo
             href={switchHref}
             hrefLang={switchHref.startsWith("/en") ? "en" : "ar"}
             aria-label={switchLabel}
+            onClick={onSwitch}
             className="inline-flex min-h-10 items-center rounded-full border border-control bg-white px-3.5 text-sm font-semibold text-navy transition-colors hover:border-navy"
           >
             {switchTo}
@@ -69,6 +89,7 @@ export function Header({ homeHref, links, cta, switchHref, switchLabel, switchTo
             </Link>
           </span>
           <button
+            ref={toggleRef}
             type="button"
             onClick={() => setOpen((v) => !v)}
             aria-expanded={open}

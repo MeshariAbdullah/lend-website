@@ -69,7 +69,12 @@ export default async function RootLayout({ children, params }: { children: React
   const locale: Locale = isLocale(raw) ? raw : defaultLocale;
   const c = getContent(locale);
   return (
-    <html lang={locale} dir={dirOf(locale)} className={`${inter.variable} ${plexArabic.variable}`}>
+    <html
+      lang={locale}
+      dir={dirOf(locale)}
+      data-scroll-behavior="smooth"
+      className={`${inter.variable} ${plexArabic.variable}`}
+    >
       <body className="flex min-h-dvh flex-col">
         <a
           href="#main"

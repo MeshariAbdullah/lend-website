@@ -147,7 +147,10 @@
     border-radius: var(--radius-card);
   }
 
+  /* Product mockups are illustrations, never controls. */
   .phone {
+    pointer-events: none;
+    user-select: none;
     background: var(--color-beige);
     border-radius: var(--radius-screen);
     box-shadow: var(--shadow-screen);

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import type { SiteContent } from "@/content";
 import { Icon } from "../Icon";
 import { LogoMark } from "../Logo";
@@ -13,11 +13,23 @@ import { Container, buttonClass } from "../ui";
 export function BusinessCta({ c }: { c: SiteContent }) {
   const [open, setOpen] = useState(false);
   const panelRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
   const p = c.businessCta.placeholder;
 
+  const close = useCallback(() => {
+    setOpen(false);
+    triggerRef.current?.focus();
+  }, []);
+
   useEffect(() => {
-    if (open) panelRef.current?.focus();
-  }, [open]);
+    if (!open) return;
+    panelRef.current?.focus();
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") close();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open, close]);
 
   return (
     <section id="contact" aria-labelledby="contact-title" className="pb-20 pt-4 lg:pb-28 xl:pb-32">
@@ -37,6 +49,7 @@ export function BusinessCta({ c }: { c: SiteContent }) {
               <p className="mt-4 text-[1.0625rem] leading-body text-on-navy-muted lg:text-lg">{c.businessCta.body}</p>
               <div className="mt-8">
                 <button
+                  ref={triggerRef}
                   type="button"
                   onClick={() => setOpen(true)}
                   aria-expanded={open}
@@ -69,7 +82,7 @@ export function BusinessCta({ c }: { c: SiteContent }) {
                 </div>
                 <button
                   type="button"
-                  onClick={() => setOpen(false)}
+                  onClick={close}
                   aria-label={p.close}
                   className="grid size-9 shrink-0 place-items-center rounded-control bg-beige text-navy hover:bg-canvas"
                 >
@@ -87,7 +100,7 @@ export function BusinessCta({ c }: { c: SiteContent }) {
                 ))}
               </ul>
               <p className="mt-5 text-sm text-ink-muted">{p.note}</p>
-              <button type="button" onClick={() => setOpen(false)} className={buttonClass("secondary", "md", "mt-6 w-full sm:w-auto")}>
+              <button type="button" onClick={close} className={buttonClass("secondary", "md", "mt-6 w-full sm:w-auto")}>
                 {p.close}
               </button>
             </div>
