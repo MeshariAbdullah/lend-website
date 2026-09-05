@@ -128,36 +128,47 @@ export const en: SiteContent = {
   },
   trust: {
     eyebrow: "06 — Trust & privacy",
-    title: "Your data stays within your rental",
-    intro: "Here is what Lend actually does with your data. Nothing more.",
+    title: "Trust built on a clear record",
+    intro:
+      "Every rental on Lend has a confirmed account, a clear contract, and a connected record, leaving less room for ambiguity between business and customer.",
     items: [
       {
         icon: "lock",
-        title: "Private account access",
-        body: "Access to your account is confirmed with a code sent to your registered mobile number. This confirms control of your Lend account; it is not government identity verification.",
-      },
-      {
-        icon: "eye",
-        title: "Controlled document access",
-        body: "The contract and rental data are visible only to the two parties of that rental.",
+        title: "Controlled account access",
+        body: "Access to your account is tied to your registered mobile number and confirmed with a verification code sent to your phone. Your account and your rentals are yours alone.",
       },
       {
         icon: "document",
-        title: "Structured contractual records",
-        body: "Contract data, including the national ID the business records, is stored as contractual data for that specific rental and reviewed by the customer before approval.",
+        title: "Clear contractual records",
+        body: "Every rental has a contract that brings together both parties' details, the rental terms, and the agreed conditions, and it stays available to both sides throughout.",
+      },
+      {
+        icon: "eye",
+        title: "Customer review before confirmation",
+        body: "No rental starts until the customer has reviewed the full offer and contract and approved them from their own account.",
+      },
+      {
+        icon: "camera",
+        title: "Documented receipt and return",
+        body: "Item condition and the time of pickup and return are recorded on the contract itself, so both sides know exactly what was handed over, and when.",
+      },
+      {
+        icon: "route",
+        title: "Structured handling when parties differ",
+        body: "If the two sides disagree, the case is documented with a description and evidence in a record linked to the contract, so the picture is clear and the handling steps can be followed from one place.",
       },
       {
         icon: "shield",
-        title: "Careful handling of sensitive data",
-        body: "Interfaces show the minimum data needed, and your data is not used for purposes outside your rental.",
+        title: "Care for sensitive data",
+        body: "Contract data is shown only to the two parties of the rental, at the minimum each screen needs, and is never used for purposes outside your rental.",
       },
       {
         icon: "history",
-        title: "Your transaction history",
-        body: "Your rental history is kept for you, with the status and contract of each rental.",
+        title: "An organized rental history",
+        body: "All your rentals, with their status, contract, and documentation, in one record you can return to at any time.",
       },
     ],
-    note: "Lend structures and documents the rental. It does not issue rulings, does not guarantee legal outcomes, and does not claim certifications it has not obtained.",
+    note: "Lend's role is to make every step of a rental clear and documented for both sides, from the first offer to the closed contract.",
   },
   faq: {
     eyebrow: "07 — FAQ",
