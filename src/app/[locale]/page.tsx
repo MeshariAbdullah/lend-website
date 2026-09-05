@@ -48,7 +48,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         <ProductExperience c={c} />
         <Trust c={c} />
         <Faq c={c} />
-        <BusinessCta c={c} />
+        <BusinessCta c={c} locale={locale} />
       </main>
       <Footer c={c} locale={locale} />
     </>

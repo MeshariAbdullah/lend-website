@@ -42,3 +42,30 @@ docs/design-audit.md     audit of the Claude Design archive the site is built fr
 
 Vercel-ready. Set `NEXT_PUBLIC_SITE_URL=https://lend.sa` in the project environment so canonical
 URLs, Open Graph URLs, and the sitemap point at the production domain.
+
+## Business-interest form
+
+The "سجّل اهتمام منشأتك" CTA opens a real form that posts to `POST /api/leads`.
+Submissions are validated and sanitized on the server and emailed through
+[Resend](https://resend.com). Configure it with environment variables only
+(see `.env.example`):
+
+| Variable | Purpose |
+|---|---|
+| `LEADS_TO_EMAIL` | Inbox that receives submissions (defaults to `partner@lend.sa`). |
+| `LEADS_FROM_EMAIL` | Verified sender on your Resend domain, e.g. `Lend <no-reply@lend.sa>`. |
+| `RESEND_API_KEY` | Resend API key. Server-only, never shipped to the browser. |
+
+When `RESEND_API_KEY` or `LEADS_FROM_EMAIL` is missing the API answers
+`503 { ok: false, error: "not_configured" }` and the form shows a
+"temporarily unavailable" message. No success is ever faked.
+
+## Scripts
+
+```
+npm run dev        # local development
+npm run build      # production build
+npm run lint       # ESLint
+npm run typecheck  # TypeScript
+npm run test:e2e   # Playwright smoke tests (builds and starts the site on :3100)
+```

@@ -27,5 +27,7 @@ export default defineConfig({
     url: `http://localhost:${port}/`,
     reuseExistingServer: !process.env.CI,
     timeout: 240_000,
+    // Tests hit /api/leads from one IP across three projects; the limiter would trip.
+    env: { LEADS_RATE_LIMIT: "off" },
   },
 });

@@ -81,7 +81,7 @@ for (const l of locales) {
       await expect.poll(() => isInView(page, "business")).toBe(true);
     });
 
-    test("business CTA opens the honest placeholder panel, closes with Escape, and submits nothing", async ({ page }) => {
+    test("business CTA opens the interest form, closes with Escape, and returns focus", async ({ page }) => {
       await page.goto(l.home);
       const trigger = page.locator("button[aria-controls='interest-panel']");
       const panel = page.locator("#interest-panel");
@@ -89,14 +89,21 @@ for (const l of locales) {
       await trigger.click();
       await expect(panel).toBeVisible();
       await expect(trigger).toHaveAttribute("aria-expanded", "true");
-      await expect(panel).toBeFocused();
-      expect(await panel.locator("form, input").count()).toBe(0);
+      await expect(panel.locator("form")).toBeVisible();
+      await expect(panel.locator("input[name='business']")).toBeFocused();
+      for (const name of ["business", "contact", "mobile", "email", "type", "message"]) {
+        const field = panel.locator(`[name='${name}']`);
+        await expect(field, `field ${name}`).toBeVisible();
+        const id = await field.getAttribute("id");
+        await expect(panel.locator(`label[for='${id}']`), `label for ${name}`).toHaveCount(1);
+      }
       await page.keyboard.press("Escape");
       await expect(panel).toBeHidden();
       await expect(trigger).toBeFocused();
       await trigger.click();
-      await panel.getByRole("button").last().click();
+      await panel.getByRole("button", { name: /close|إغلاق/i }).click();
       await expect(panel).toBeHidden();
+      await expect(trigger).toBeFocused();
     });
 
     test("FAQ accordions toggle with mouse and keyboard", async ({ page }) => {

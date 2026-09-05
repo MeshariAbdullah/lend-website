@@ -27,6 +27,35 @@ export type IconName =
   | "history"
   | "route";
 
+export type LeadFieldName = "business" | "contact" | "mobile" | "email" | "type" | "message";
+
+export type LeadFormCopy = {
+  title: string;
+  intro: string;
+  labels: Record<LeadFieldName, string>;
+  placeholders: Partial<Record<LeadFieldName, string>>;
+  typePlaceholder: string;
+  typeOptions: { value: string; label: string }[];
+  optional: string;
+  requiredNote: string;
+  submit: string;
+  submitting: string;
+  privacy: string;
+  close: string;
+  success: { title: string; body: string; done: string };
+  errors: {
+    required: string;
+    email: string;
+    mobile: string;
+    type: string;
+    tooLong: string;
+    fixFields: string;
+    unavailable: string;
+    rateLimited: string;
+    generic: string;
+  };
+};
+
 export type SiteContent = {
   meta: {
     title: string;
@@ -127,14 +156,7 @@ export type SiteContent = {
     title: string;
     body: string;
     cta: string;
-    placeholder: {
-      title: string;
-      body: string;
-      listTitle: string;
-      list: string[];
-      note: string;
-      close: string;
-    };
+    form: LeadFormCopy;
   };
   footer: {
     description: string;
