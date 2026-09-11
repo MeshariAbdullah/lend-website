@@ -8,6 +8,35 @@ import { buttonClass } from "./ui";
 
 export type NavLink = { href: string; label: string };
 
+/**
+ * Section links ("/#how") are plain anchors so the browser handles the
+ * fragment scroll itself; only real page links go through the Next.js router.
+ */
+function NavAnchor({
+  href,
+  className,
+  onClick,
+  children,
+}: {
+  href: string;
+  className: string;
+  onClick?: () => void;
+  children: React.ReactNode;
+}) {
+  if (href.includes("#")) {
+    return (
+      <a href={href} onClick={onClick} className={className}>
+        {children}
+      </a>
+    );
+  }
+  return (
+    <Link href={href} onClick={onClick} className={className}>
+      {children}
+    </Link>
+  );
+}
+
 type Props = {
   homeHref: string;
   links: NavLink[];
@@ -62,12 +91,12 @@ export function Header({ homeHref, links, cta, switchHref, switchLabel, switchTo
           <ul className="flex items-center gap-1">
             {links.map((l) => (
               <li key={l.href}>
-                <Link
+                <NavAnchor
                   href={l.href}
                   className="inline-flex min-h-10 items-center rounded-control px-3.5 text-[15px] font-medium text-ink-body transition-colors hover:bg-white hover:text-navy"
                 >
                   {l.label}
-                </Link>
+                </NavAnchor>
               </li>
             ))}
           </ul>
@@ -84,9 +113,9 @@ export function Header({ homeHref, links, cta, switchHref, switchLabel, switchTo
             {switchTo}
           </Link>
           <span className="hidden sm:block">
-            <Link href={cta.href} className={buttonClass("primary", "md")}>
+            <NavAnchor href={cta.href} className={buttonClass("primary", "md")}>
               {cta.label}
-            </Link>
+            </NavAnchor>
           </span>
           <button
             ref={toggleRef}
@@ -107,19 +136,19 @@ export function Header({ homeHref, links, cta, switchHref, switchLabel, switchTo
           <ul className="flex flex-col">
             {links.map((l) => (
               <li key={l.href}>
-                <Link
+                <NavAnchor
                   href={l.href}
                   onClick={() => setOpen(false)}
                   className="flex min-h-12 items-center rounded-control px-3 text-base font-medium text-navy hover:bg-white"
                 >
                   {l.label}
-                </Link>
+                </NavAnchor>
               </li>
             ))}
             <li className="pt-2 sm:hidden">
-              <Link href={cta.href} onClick={() => setOpen(false)} className={buttonClass("primary", "lg", "w-full")}>
+              <NavAnchor href={cta.href} onClick={() => setOpen(false)} className={buttonClass("primary", "lg", "w-full")}>
                 {cta.label}
-              </Link>
+              </NavAnchor>
             </li>
           </ul>
         </nav>

@@ -1,4 +1,3 @@
-import { notFound } from "next/navigation";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { BusinessCta } from "@/components/sections/BusinessCta";
@@ -11,13 +10,13 @@ import { ProductExperience } from "@/components/sections/ProductExperience";
 import { Trust } from "@/components/sections/Trust";
 import { WhyLend } from "@/components/sections/WhyLend";
 import { getContent } from "@/content";
-import { isLocale, localeHref, otherLocale } from "@/lib/i18n";
+import { localeHref, otherLocale, type Locale } from "@/lib/i18n";
 
-export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
-  const { locale } = await params;
-  if (!isLocale(locale)) notFound();
+/** The single-page marketing site. Section ids are the nav targets. */
+export function HomePage({ locale }: { locale: Locale }) {
   const c = getContent(locale);
   const home = localeHref(locale);
+  // Same-page fragment links: plain anchors, never client-side route navigations.
   const anchor = (id: string) => `${home}#${id}`;
 
   return (
@@ -26,7 +25,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         homeHref={home}
         brandName={c.brand.name}
         links={[
-          { href: anchor("top"), label: c.nav.home },
+          { href: home, label: c.nav.home },
           { href: anchor("how"), label: c.nav.how },
           { href: anchor("customers"), label: c.nav.customers },
           { href: anchor("business"), label: c.nav.business },

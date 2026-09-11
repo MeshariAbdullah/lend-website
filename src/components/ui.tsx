@@ -52,6 +52,14 @@ export function ButtonLink({
   size?: "md" | "lg";
   className?: string;
 }) {
+  // In-page fragment links are plain anchors: the browser scrolls, no route navigation happens.
+  if (href.includes("#")) {
+    return (
+      <a href={href} className={buttonClass(variant, size, className)}>
+        {children}
+      </a>
+    );
+  }
   return (
     <Link href={href} className={buttonClass(variant, size, className)}>
       {children}

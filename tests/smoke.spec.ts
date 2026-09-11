@@ -72,6 +72,38 @@ for (const l of locales) {
       }
     });
 
+    test("no header link opens the 404 page, on the home page or from a legal page", async ({ page }) => {
+      const notFoundTitles = ["الصفحة غير موجودة", "Page not found"];
+      for (const start of [l.home, l.privacy]) {
+        await page.goto(start);
+        const hrefs = await page.$$eval("header a[href]", (as) => as.map((a) => a.getAttribute("href") ?? ""));
+        expect(hrefs.length).toBeGreaterThanOrEqual(8);
+        for (const href of new Set(hrefs)) {
+          await page.goto(start);
+          await openMobileMenuIfPresent(page);
+          const link = page.locator(`header a[href='${href}']:visible`).first();
+          await link.click();
+          await page.waitForLoadState("load");
+          await expect(page.locator("h1").first(), `${href} from ${start}`).not.toHaveText(notFoundTitles);
+          const id = href.split("#")[1];
+          if (id) await expect.poll(() => isInView(page, id), { timeout: 5000 }).toBe(true);
+          else await expect(page).toHaveURL(new RegExp(`${href === "/" ? "^http://[^/]+/$" : `${href}$`}`));
+        }
+      }
+    });
+
+    test("logo and home link go to the locale home page", async ({ page }) => {
+      await page.goto(l.privacy);
+      await page.locator("header a").first().click();
+      await expect(page).toHaveURL(new RegExp(l.home === "/" ? "^http://[^/]+/$" : `${l.home}$`));
+      await expect(page.locator("#top")).toBeVisible();
+      await page.goto(l.privacy);
+      await openMobileMenuIfPresent(page);
+      await page.locator(`header nav a[href='${l.home}']:visible`).first().click();
+      await expect(page).toHaveURL(new RegExp(l.home === "/" ? "^http://[^/]+/$" : `${l.home}$`));
+      await expect(page.locator("#top")).toBeVisible();
+    });
+
     test("hero CTAs scroll to how-it-works and the business section", async ({ page }) => {
       await page.goto(l.home);
       await page.locator(`#top a[href='${l.home}#how']`).click();

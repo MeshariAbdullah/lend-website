@@ -1,18 +1,15 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { Icon } from "@/components/Icon";
 import { Container, buttonClass } from "@/components/ui";
 import { getContent } from "@/content";
-import { isLocale, localeHref, otherLocale, type Locale } from "@/lib/i18n";
+import { localeHref, otherLocale, type Locale } from "@/lib/i18n";
 
 type Kind = "privacy" | "terms";
 
-export async function legalMetadata(kind: Kind, params: Promise<{ locale: string }>): Promise<Metadata> {
-  const { locale } = await params;
-  if (!isLocale(locale)) return {};
+export function legalMetadata(kind: Kind, locale: Locale): Metadata {
   const c = getContent(locale);
   const path = `/${kind}`;
   return {
@@ -26,10 +23,7 @@ export async function legalMetadata(kind: Kind, params: Promise<{ locale: string
   };
 }
 
-export async function LegalPage({ kind, params }: { kind: Kind; params: Promise<{ locale: string }> }) {
-  const { locale: raw } = await params;
-  if (!isLocale(raw)) notFound();
-  const locale: Locale = raw;
+export function LegalPage({ kind, locale }: { kind: Kind; locale: Locale }) {
   const c = getContent(locale);
   const home = localeHref(locale);
   const page = c.legal[kind];
@@ -40,6 +34,7 @@ export async function LegalPage({ kind, params }: { kind: Kind; params: Promise<
         homeHref={home}
         brandName={c.brand.name}
         links={[
+          { href: home, label: c.nav.home },
           { href: `${home}#how`, label: c.nav.how },
           { href: `${home}#customers`, label: c.nav.customers },
           { href: `${home}#business`, label: c.nav.business },

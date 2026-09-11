@@ -1,8 +1,15 @@
 import type { Metadata, Viewport } from "next";
 import { IBM_Plex_Sans_Arabic, Inter } from "next/font/google";
 import { getContent } from "@/content";
-import { defaultLocale, dirOf, isLocale, localeHref, locales, siteUrl, type Locale } from "@/lib/i18n";
-import "../globals.css";
+import { dirOf, localeHref, siteUrl, type Locale } from "@/lib/i18n";
+import "@/app/globals.css";
+
+/**
+ * Shared root-layout pieces for the two language roots.
+ * Arabic is served from `app/(ar)` at `/`, English from `app/(en)/en` at `/en`.
+ * Each is a real root layout, so every public URL is a real route with its own
+ * prerendered HTML and RSC payload (no rewrites involved).
+ */
 
 const inter = Inter({
   subsets: ["latin"],
@@ -17,21 +24,13 @@ const plexArabic = IBM_Plex_Sans_Arabic({
   display: "swap",
 });
 
-type Params = Promise<{ locale: string }>;
-
-export function generateStaticParams() {
-  return locales.map((locale) => ({ locale }));
-}
-
 export const viewport: Viewport = {
   themeColor: "#F5F5F0",
   width: "device-width",
   initialScale: 1,
 };
 
-export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
-  const raw = (await params).locale;
-  const locale: Locale = isLocale(raw) ? raw : defaultLocale;
+export function buildMetadata(locale: Locale): Metadata {
   const c = getContent(locale);
   const path = localeHref(locale);
   return {
@@ -64,9 +63,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   };
 }
 
-export default async function RootLayout({ children, params }: { children: React.ReactNode; params: Params }) {
-  const raw = (await params).locale;
-  const locale: Locale = isLocale(raw) ? raw : defaultLocale;
+export function LocaleHtml({ locale, children }: { locale: Locale; children: React.ReactNode }) {
   const c = getContent(locale);
   return (
     <html

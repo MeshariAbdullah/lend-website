@@ -23,9 +23,15 @@ export function Footer({ c, locale }: { c: SiteContent; locale: Locale }) {
             <ul className="flex flex-col gap-3">
               {links.map((l) => (
                 <li key={l.href}>
-                  <Link href={l.href} className="text-[15px] font-medium text-ink-body hover:text-navy hover:underline underline-offset-4">
-                    {l.label}
-                  </Link>
+                  {l.href.includes("#") ? (
+                    <a href={l.href} className="text-[15px] font-medium text-ink-body hover:text-navy hover:underline underline-offset-4">
+                      {l.label}
+                    </a>
+                  ) : (
+                    <Link href={l.href} className="text-[15px] font-medium text-ink-body hover:text-navy hover:underline underline-offset-4">
+                      {l.label}
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>
