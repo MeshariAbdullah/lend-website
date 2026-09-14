@@ -22,5 +22,5 @@ export function otherLocale(locale: Locale): Locale {
 }
 
 export const siteUrl = (
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://lend.sa"
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.lend.sa"
 ).replace(/\/$/, "");

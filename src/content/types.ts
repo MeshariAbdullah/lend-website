@@ -56,6 +56,30 @@ export type LeadFormCopy = {
   };
 };
 
+export type LegalSection = {
+  id: string;
+  heading: string;
+  paragraphs?: string[];
+  bullets?: string[];
+  /** Paragraph shown after the bullets. */
+  after?: string[];
+};
+
+export type LegalDoc = {
+  eyebrow: string;
+  title: string;
+  intro: string;
+  /** Human-readable effective date, or empty for a placeholder page. */
+  effectiveDate: string;
+  /** Machine-readable date (YYYY-MM-DD) for the <time> element. */
+  effectiveDateIso: string;
+  sections: LegalSection[];
+  /** Official contact email shown in the contact section; empty to hide. */
+  contactEmail: string;
+  /** True while the document is still a placeholder (hidden from search engines). */
+  placeholder: boolean;
+};
+
 export type SiteContent = {
   meta: {
     title: string;
@@ -167,9 +191,12 @@ export type SiteContent = {
     madeIn: string;
   };
   legal: {
-    privacy: { title: string; body: string; updated: string };
-    terms: { title: string; body: string; updated: string };
+    privacy: LegalDoc;
+    terms: LegalDoc;
     back: string;
+    contentsLabel: string;
+    effectiveLabel: string;
+    contactLabel: string;
   };
   notFound: { title: string; body: string; back: string };
   /** Copy used inside the product mockups. Kept factual and small. */

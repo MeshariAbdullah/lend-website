@@ -194,6 +194,33 @@ for (const l of locales) {
       await expect(page).toHaveURL(new RegExp(`${l.home === "/" ? "^http://[^/]+/$" : `${l.home}$`}`));
     });
 
+    test("privacy policy is a real, public, complete document", async ({ page }) => {
+      const response = await page.goto(l.privacy);
+      expect(response?.status()).toBe(200);
+      await expect(page).toHaveTitle(/سياسة الخصوصية|Privacy Policy/);
+      await expect(page.locator("html")).toHaveAttribute("dir", l.dir);
+      await expect(page.locator("h1")).toHaveText(/سياسة الخصوصية|Privacy Policy/);
+      expect(await page.locator("article h2").count()).toBeGreaterThanOrEqual(10);
+      await expect(page.locator("article time[datetime]")).toHaveCount(1);
+      const mail = page.locator("a[href^='mailto:']");
+      await expect(mail).toHaveCount(1);
+      await expect(mail).toHaveText("support@lend.sa");
+      const body = (await page.locator("article").innerText()).toLowerCase();
+      for (const forbidden of ["lorem", "placeholder", "todo", "نفاذ", "nafath", "nafith", "هذه الصفحة مؤقتة", "نعمل على إعداد النسخة النهائية", "we are finalizing"]) {
+        expect(body, `privacy page must not contain "${forbidden}"`).not.toContain(forbidden);
+      }
+      const robots = page.locator("meta[name='robots']");
+      if (await robots.count()) await expect(robots).not.toHaveAttribute("content", /noindex/);
+      await expect(page.locator("link[rel='canonical']")).toHaveAttribute("href", new RegExp(`${l.privacy}$`));
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+      // Table of contents anchors resolve (wide screens only).
+      const toc = page.locator("nav[aria-label] a[href^='#']");
+      if (await toc.first().isVisible()) {
+        const ids = await toc.evaluateAll((as) => as.map((a) => (a.getAttribute("href") ?? "").slice(1)));
+        for (const id of ids) await expect(page.locator(`section#${id}`)).toHaveCount(1);
+      }
+    });
+
     test("unknown routes show the localized 404 with a working way back", async ({ page }) => {
       const response = await page.goto(`${l.home === "/" ? "" : l.home}/does-not-exist`);
       expect(response?.status()).toBe(404);

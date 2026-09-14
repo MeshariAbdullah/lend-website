@@ -42,7 +42,8 @@ function safeSourceUrl(candidate: unknown, req: Request): string {
   try {
     const url = new URL(raw);
     const site = new URL(siteUrl);
-    const allowed = url.hostname === site.hostname || url.hostname === "localhost" || url.hostname.endsWith(".vercel.app");
+    const strip = (h: string) => h.replace(/^www\./, "");
+    const allowed = strip(url.hostname) === strip(site.hostname) || url.hostname === "localhost" || url.hostname.endsWith(".vercel.app");
     return allowed ? url.href.slice(0, 500) : "";
   } catch {
     return "";

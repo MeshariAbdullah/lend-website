@@ -40,7 +40,7 @@ docs/design-audit.md     audit of the Claude Design archive the site is built fr
 
 ## Deployment
 
-Vercel-ready. Set `NEXT_PUBLIC_SITE_URL=https://lend.sa` in the project environment so canonical
+Vercel-ready. Set `NEXT_PUBLIC_SITE_URL=https://www.lend.sa` in the project environment so canonical
 URLs, Open Graph URLs, and the sitemap point at the production domain.
 
 ## Business-interest form
