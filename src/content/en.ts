@@ -24,6 +24,7 @@ export const en: SiteContent = {
     switchLabel: "Change language",
     switchTo: "العربية",
     cta: "Register your business interest",
+    merchantLogin: "Merchant Login",
     openMenu: "Open menu",
     closeMenu: "Close menu",
     skip: "Skip to content",
@@ -113,6 +114,7 @@ export const en: SiteContent = {
       { icon: "shield", title: "Structured dispute handling", body: "Damage or non-return cases with a description, evidence and claim amount, on a documented track." },
     ],
     cta: "Register your business interest",
+    loginCta: "Merchant Login",
   },
   product: {
     eyebrow: "05 — Product experience",
@@ -214,6 +216,8 @@ export const en: SiteContent = {
     title: "Turn your rental operations into a clearer, better-organized experience",
     body: "Register your interest and we will get in touch to show you how Lend works with your business.",
     cta: "Register your business interest",
+    loginPrompt: "Already a Lend merchant?",
+    loginCta: "Merchant Login",
     form: {
       title: "Register your business interest",
       intro: "Tell us about your business and the Lend partnerships team will get in touch.",

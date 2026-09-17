@@ -10,7 +10,7 @@ import { ProductExperience } from "@/components/sections/ProductExperience";
 import { Trust } from "@/components/sections/Trust";
 import { WhyLend } from "@/components/sections/WhyLend";
 import { getContent } from "@/content";
-import { localeHref, otherLocale, type Locale } from "@/lib/i18n";
+import { localeHref, merchantPortalUrl, otherLocale, type Locale } from "@/lib/i18n";
 
 /** The single-page marketing site. Section ids are the nav targets. */
 export function HomePage({ locale }: { locale: Locale }) {
@@ -32,6 +32,7 @@ export function HomePage({ locale }: { locale: Locale }) {
           { href: anchor("faq"), label: c.nav.faq },
         ]}
         cta={{ href: anchor("contact"), label: c.nav.cta }}
+        merchantLogin={{ href: merchantPortalUrl, label: c.nav.merchantLogin }}
         switchHref={localeHref(otherLocale(locale))}
         switchLabel={c.nav.switchLabel}
         switchTo={c.nav.switchTo}

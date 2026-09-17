@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { SiteContent } from "@/content";
-import type { Locale } from "@/lib/i18n";
+import { merchantPortalUrl, type Locale } from "@/lib/i18n";
 import { Icon } from "../Icon";
 import { LogoMark } from "../Logo";
 import { Container, buttonClass } from "../ui";
@@ -61,6 +61,12 @@ export function BusinessCta({ c, locale }: { c: SiteContent; locale: Locale }) {
                   <Icon name="arrow" size={18} mirror />
                 </button>
               </div>
+              <p className="mt-5 text-[15px] text-on-navy-muted">
+                {c.businessCta.loginPrompt}{" "}
+                <a href={merchantPortalUrl} className="font-semibold text-white underline-offset-4 hover:underline">
+                  {c.businessCta.loginCta}
+                </a>
+              </p>
             </div>
 
             <div

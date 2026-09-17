@@ -5,7 +5,7 @@ import { Header } from "@/components/Header";
 import { Icon } from "@/components/Icon";
 import { Container, buttonClass } from "@/components/ui";
 import { getContent } from "@/content";
-import { localeHref, otherLocale, type Locale } from "@/lib/i18n";
+import { localeHref, merchantPortalUrl, otherLocale, type Locale } from "@/lib/i18n";
 
 type Kind = "privacy" | "terms";
 
@@ -53,6 +53,7 @@ export function LegalPage({ kind, locale }: { kind: Kind; locale: Locale }) {
           { href: `${home}#faq`, label: c.nav.faq },
         ]}
         cta={{ href: `${home}#contact`, label: c.nav.cta }}
+        merchantLogin={{ href: merchantPortalUrl, label: c.nav.merchantLogin }}
         switchHref={localeHref(otherLocale(locale), `/${kind}`)}
         switchLabel={c.nav.switchLabel}
         switchTo={c.nav.switchTo}

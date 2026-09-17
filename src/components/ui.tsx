@@ -52,8 +52,8 @@ export function ButtonLink({
   size?: "md" | "lg";
   className?: string;
 }) {
-  // In-page fragment links are plain anchors: the browser scrolls, no route navigation happens.
-  if (href.includes("#")) {
+  // Fragment and external links are plain anchors; only site pages go through the router.
+  if (href.includes("#") || href.startsWith("http")) {
     return (
       <a href={href} className={buttonClass(variant, size, className)}>
         {children}

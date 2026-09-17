@@ -103,6 +103,7 @@ export type SiteContent = {
     switchLabel: string;
     switchTo: string;
     cta: string;
+    merchantLogin: string;
     openMenu: string;
     closeMenu: string;
     skip: string;
@@ -149,6 +150,7 @@ export type SiteContent = {
     intro: string;
     items: Item[];
     cta: string;
+    loginCta: string;
   };
   product: {
     eyebrow: string;
@@ -180,6 +182,8 @@ export type SiteContent = {
     title: string;
     body: string;
     cta: string;
+    loginPrompt: string;
+    loginCta: string;
     form: LeadFormCopy;
   };
   footer: {

@@ -1,6 +1,6 @@
 import type { SiteContent } from "@/content";
 import type { Locale } from "@/lib/i18n";
-import { localeHref } from "@/lib/i18n";
+import { localeHref, merchantPortalUrl } from "@/lib/i18n";
 import { Icon } from "../Icon";
 import { DashboardCard } from "../mockups/DashboardCard";
 import { ButtonLink, Container, SectionHeading } from "../ui";
@@ -28,10 +28,13 @@ export function ForBusinesses({ c, locale }: { c: SiteContent; locale: Locale })
                 </li>
               ))}
             </ul>
-            <div className="mt-10">
+            <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
               <ButtonLink href={`${localeHref(locale)}#contact`} variant="green" size="lg">
                 {c.business.cta}
                 <Icon name="arrow" size={18} mirror />
+              </ButtonLink>
+              <ButtonLink href={merchantPortalUrl} variant="secondary" size="lg">
+                {c.business.loginCta}
               </ButtonLink>
             </div>
           </div>

@@ -23,7 +23,7 @@ function NavAnchor({
   onClick?: () => void;
   children: React.ReactNode;
 }) {
-  if (href.includes("#")) {
+  if (href.includes("#") || href.startsWith("http")) {
     return (
       <a href={href} onClick={onClick} className={className}>
         {children}
@@ -41,6 +41,8 @@ type Props = {
   homeHref: string;
   links: NavLink[];
   cta: NavLink;
+  /** External merchant portal link; opens in the same tab. */
+  merchantLogin: NavLink;
   switchHref: string;
   switchLabel: string;
   switchTo: string;
@@ -49,7 +51,18 @@ type Props = {
   brandName: string;
 };
 
-export function Header({ homeHref, links, cta, switchHref, switchLabel, switchTo, openMenu, closeMenu, brandName }: Props) {
+export function Header({
+  homeHref,
+  links,
+  cta,
+  merchantLogin,
+  switchHref,
+  switchLabel,
+  switchTo,
+  openMenu,
+  closeMenu,
+  brandName,
+}: Props) {
   const [open, setOpen] = useState(false);
   const toggleRef = useRef<HTMLButtonElement>(null);
 
@@ -87,13 +100,13 @@ export function Header({ homeHref, links, cta, switchHref, switchLabel, switchTo
           <Logo markSize={32} label={brandName} />
         </Link>
 
-        <nav aria-label="Primary" className="mx-auto hidden lg:block">
+        <nav aria-label="Primary" className="mx-auto hidden xl:block">
           <ul className="flex items-center gap-1">
             {links.map((l) => (
               <li key={l.href}>
                 <NavAnchor
                   href={l.href}
-                  className="inline-flex min-h-10 items-center rounded-control px-3.5 text-[15px] font-medium text-ink-body transition-colors hover:bg-white hover:text-navy"
+                  className="inline-flex min-h-10 items-center whitespace-nowrap rounded-control px-3.5 text-[15px] font-medium text-ink-body transition-colors hover:bg-white hover:text-navy"
                 >
                   {l.label}
                 </NavAnchor>
@@ -102,18 +115,23 @@ export function Header({ homeHref, links, cta, switchHref, switchLabel, switchTo
           </ul>
         </nav>
 
-        <div className="ms-auto flex items-center gap-2 lg:ms-0">
+        <div className="ms-auto flex shrink-0 items-center gap-2 xl:ms-0">
           <Link
             href={switchHref}
             hrefLang={switchHref.startsWith("/en") ? "en" : "ar"}
             aria-label={switchLabel}
             onClick={onSwitch}
-            className="inline-flex min-h-10 items-center rounded-full border border-control bg-white px-3.5 text-sm font-semibold text-navy transition-colors hover:border-navy"
+            className="inline-flex min-h-10 items-center whitespace-nowrap rounded-full border border-control bg-white px-3.5 text-sm font-semibold text-navy transition-colors hover:border-navy"
           >
             {switchTo}
           </Link>
+          <span className="hidden md:block">
+            <NavAnchor href={merchantLogin.href} className={buttonClass("secondary", "md", "whitespace-nowrap")}>
+              {merchantLogin.label}
+            </NavAnchor>
+          </span>
           <span className="hidden sm:block">
-            <NavAnchor href={cta.href} className={buttonClass("primary", "md")}>
+            <NavAnchor href={cta.href} className={buttonClass("primary", "md", "whitespace-nowrap")}>
               {cta.label}
             </NavAnchor>
           </span>
@@ -124,14 +142,14 @@ export function Header({ homeHref, links, cta, switchHref, switchLabel, switchTo
             aria-expanded={open}
             aria-controls="mobile-nav"
             aria-label={open ? closeMenu : openMenu}
-            className="grid size-10 place-items-center rounded-control border border-control bg-white text-navy lg:hidden"
+            className="grid size-10 place-items-center rounded-control border border-control bg-white text-navy xl:hidden"
           >
             <Icon name={open ? "close" : "menu"} size={18} strokeWidth={1.8} />
           </button>
         </div>
       </div>
 
-      <div id="mobile-nav" hidden={!open} className="border-t border-line bg-beige lg:hidden">
+      <div id="mobile-nav" hidden={!open} className="border-t border-line bg-beige xl:hidden">
         <nav aria-label="Mobile" className="mx-auto max-w-site px-5 py-3 sm:px-8">
           <ul className="flex flex-col">
             {links.map((l) => (
@@ -145,6 +163,11 @@ export function Header({ homeHref, links, cta, switchHref, switchLabel, switchTo
                 </NavAnchor>
               </li>
             ))}
+            <li className="pt-2 md:hidden">
+              <NavAnchor href={merchantLogin.href} onClick={() => setOpen(false)} className={buttonClass("secondary", "lg", "w-full")}>
+                {merchantLogin.label}
+              </NavAnchor>
+            </li>
             <li className="pt-2 sm:hidden">
               <NavAnchor href={cta.href} onClick={() => setOpen(false)} className={buttonClass("primary", "lg", "w-full")}>
                 {cta.label}

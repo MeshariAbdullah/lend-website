@@ -76,7 +76,9 @@ for (const l of locales) {
       const notFoundTitles = ["الصفحة غير موجودة", "Page not found"];
       for (const start of [l.home, l.privacy]) {
         await page.goto(start);
-        const hrefs = await page.$$eval("header a[href]", (as) => as.map((a) => a.getAttribute("href") ?? ""));
+        const hrefs = await page.$$eval("header a[href]", (as) =>
+          as.map((a) => a.getAttribute("href") ?? "").filter((h) => h.startsWith("/")),
+        );
         expect(hrefs.length).toBeGreaterThanOrEqual(8);
         for (const href of new Set(hrefs)) {
           await page.goto(start);
@@ -102,6 +104,23 @@ for (const l of locales) {
       await page.locator(`header nav a[href='${l.home}']:visible`).first().click();
       await expect(page).toHaveURL(new RegExp(l.home === "/" ? "^http://[^/]+/$" : `${l.home}$`));
       await expect(page.locator("#top")).toBeVisible();
+    });
+
+    test("merchant login links point at the business portal in the same tab", async ({ page }) => {
+      await page.goto(l.home);
+      const portal = "https://business.lend.sa";
+      const label = l.code === "ar" ? "دخول التجار" : "Merchant Login";
+      await openMobileMenuIfPresent(page);
+      const header = page.locator(`header a[href='${portal}']:visible`);
+      await expect(header.first()).toBeVisible();
+      await expect(header.first()).toHaveText(label);
+      for (const a of await page.locator(`a[href='${portal}']`).all()) {
+        expect(await a.getAttribute("target"), "must open in the same tab").toBeNull();
+      }
+      await expect(page.locator(`#business a[href='${portal}']`)).toHaveText(label);
+      await expect(page.locator(`#contact a[href='${portal}']`)).toHaveText(label);
+      // The existing interest CTA is untouched.
+      await expect(page.locator(`#business a[href='${l.home}#contact']`)).toHaveCount(1);
     });
 
     test("hero CTAs scroll to how-it-works and the business section", async ({ page }) => {
